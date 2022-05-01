@@ -1,7 +1,5 @@
 import "./index.css";
-import Logo from "./logo/logo.png"
 
-console.log("Heloo !")
 
 const pic = document.getElementById('logo');
 

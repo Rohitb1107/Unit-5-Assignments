@@ -1,0 +1,29 @@
+body{
+    font-family: monospace;
+}
+
+h1{
+    text-align: center;
+}
+
+form{
+    width: 60%;
+    margin: auto;
+}
+table{
+    margin-left: 300px;
+    border: 1px solid black;
+}
+input{
+    font-size: 25px;
+}
+th,td{
+    font-size: 15px;
+    padding: 5px;
+    border: 1px solid black;
+}
+
+#logo{
+    width: 20%;
+    margin: auto;
+}

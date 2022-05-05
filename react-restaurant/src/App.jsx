@@ -1,45 +1,61 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import "./App.css";
+
+import RestaurantDetails from "./components/RestaurantDetails";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function getRestaurantData() {
+      const response = await fetch(`http://localhost:8080/Restaurant`);
+      const Data = await response.json();
+      console.log(Data);
+      setData(Data);
+    }
+    getRestaurantData();
+  }, []);
+  const [state, setState] = useState({
+    filterRating: 0,
+  });
+  const [payment, setPayment] = useState({
+    paymentMethod: "All",
+  });
+  const [cost, setCost] = useState({
+    sortMethod: null,
+  });
+
+  const handleRating = (rating) => {
+    setState({ filterRating: rating });
+  };
+  const handlePayment = (payment) => {
+    setPayment({ paymentMethod: payment });
+  };
+
+  const handleSort = (order) => {
+    setCost({ sortMethod: order });
+  };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <h1>RESTAURANTS</h1>
+      {data
+        .filter(({ rating, payment_methods }) => {
+          const { cash, card } = payment_methods;
+          let paymentCondition = true;
+          if (payment.paymentMethod === "Cash") {
+            paymentCondition = cash ? true : false;
+          } else if (payment.paymentMethod === "Card") {
+            paymentCondition = card ? true : false;
+          }
+          return rating >= state.filterRating && paymentCondition;
+        })
+        .map((item) => {
+          console.log(item);
+          return <RestaurantDetails data={item} key={item.id} />;
+        })}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

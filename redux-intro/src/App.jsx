@@ -1,45 +1,23 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { store } from './store.js'
 
-function App() {
-  const [count, setCount] = useState(0)
+const state = store.getState();
+// let todos = state.todos;
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+// todos.map((e) => {
+//     let todo = document.createElement('div');
+//     todo.innerText = e.title;
+//     document.getElementById('root').append(todo);
+// })
+
+const getTodo = () => {
+    event.preventDefault();
+    const todo = document.getElementById('user-todo').value;
+    const action = {
+        type: "add-todo",
+        payload: todo
+    };
+    store.dispatch(action);
+    console.log(store.getState())
 }
 
-export default App
+document.getElementById('submit').addEventListener('click', getTodo);

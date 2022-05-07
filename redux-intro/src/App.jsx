@@ -1,4 +1,4 @@
-import { store } from './store.js'
+import { store } from './Redux/store'
 
 const state = store.getState();
 // let todos = state.todos;
